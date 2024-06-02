@@ -1,0 +1,28 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<section class="container my-5">
+  <h1>Index</h1>
+  <div class="col-md-6 my-4">
+    <ul class="list-group">
+      {% if not books %}
+      <p>You got no books.</p>
+      {% endif %}
+      {% for book in books %}
+      <li class="list-group-item">
+	<span class="text-body-secondary">Title</span>
+	<p>{{ book.title }}</p>
+	<span class="text-body-secondary">Number of Pages</span>
+	<p>{{ book.num_of_page }}</p>
+	<div>
+	  <a class="btn btn-primary" href="#"><i class="bi bi-pencil-square"></i></a>
+	  <a class="btn btn-danger" href="#"><i class="bi bi-trash"></i></a>
+	</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "layout/base.html" %}
+
+{% block title %}New Book{% endblock %}
+
+{% block content %}
+<section class="container my-5">
+  <form class="col-md-6" action="{% url 'bookufy:new' %}" method="post" autocomplete="off">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" name="title" class="form-control" id="title" spellcheck="false" required>
+    </div>
+    <div class="mb-3">
+      <label for="num_of_page" class="form-label">Number of Pages</label>
+      <input type="number" name="num_of_page" min="0" value="0" step="1" class="form-control" id="num_of_page" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</section>
+{% endblock %}
