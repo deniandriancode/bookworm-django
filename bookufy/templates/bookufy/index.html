@@ -16,13 +16,81 @@
 	<p>{{ book.title }}</p>
 	<span class="text-body-secondary">Number of Pages</span>
 	<p>{{ book.num_of_page }}</p>
+	<p>
+	  <a href="{% url 'bookufy:detail' book.id %}" class="text-underline">Read More</a>
+	</p>
 	<div>
 	  <a class="btn btn-primary" href="{% url 'bookufy:edit' book.id %}"><i class="bi bi-pencil-square"></i></a>
-	  <a class="btn btn-danger" href="{% url 'bookufy:delete' book.id %}"><i class="bi bi-trash"></i></a>
+	  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ book.id }}">
+	    <i class="bi bi-trash"></i>
+	  </button>
+
+	  <!-- Modal -->
+	  <div class="modal fade" id="exampleModal-{{ book.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="exampleModalLabel-{{ book.id }}">Delete Confirmation</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		  Are you sure you want to delete <b>{{ book.title }}</b>? This action cannot be undone.
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+		  <button class="btn btn-outline-danger" type="button" onclick="deleteBook({{ book.id }})">Yes, delete book</button>
+		</div>
+	      </div>
+	    </div>
+	  </div>
 	</div>
       </li>
       {% endfor %}
     </ul>
+    <div class="container my-4">
+      {% if prev %}<a class="btn fs-3" href="{% url 'bookufy:index'%}?page={{page.number_prev}}"><i class="bi bi-arrow-left-circle"></i></a>{% endif %}
+      {% if next %}<a class="btn fs-3" href="{% url 'bookufy:index' %}?page={{ page.number_next }}"><i class="bi bi-arrow-right-circle"></i></a>{% endif %}
+    </div>
   </div>
 </section>
+
+<script type="text/javascript" defer>
+  function deleteBook(bookId) {
+      // Example: Send a DELETE request using fetch API or redirect to a delete URL
+      fetch(`/bookufy/delete/${bookId}/`, {
+	  method: 'GET',
+	  headers: {
+	      'Content-Type': 'application/json',
+	      'X-CSRFToken': getCookie('csrftoken'),  // Include CSRF token for security
+	  },
+      })
+	  .then(response => {
+	      if (response.ok) {
+		  // Optionally, you can add logic to remove the deleted book's entry from the UI
+		  window.location.reload();  // Reload the page to reflect the changes
+	      } else {
+		  console.error('Failed to delete the book');
+	      }
+	  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  }
+
+  // Helper function to get CSRF token from cookies
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+</script>
 {% endblock %}

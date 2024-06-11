@@ -1,0 +1,38 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<section class="container-md my-5">
+  <article class="col-6">
+    <h1>Search</h1>
+    <form action="{% url 'bookufy:search' %}" method="get" autocomplete="off">
+      <div class="input-group mb-3">
+	<input type="text" name="search_string" value="{{ search_string }}" class="form-control" aria-describedby="basic-addon2">
+	<button id="basic-addon2" class="btn btn-primary"><i class="bi bi-search"></i></button>
+      </div>
+    </form>
+    {% if is_search %}
+    <div>
+      <ul class="list-group">
+	{% for book in filtered_books %}
+	<li class="list-group-item">
+	  <span class="text-body-secondary">Title</span>
+	  <p>{{ book.title }}</p>
+	  <span class="text-body-secondary">Number of Pages</span>
+	  <p>{{ book.num_of_page }}</p>
+	  <p>
+	    <a href="{% url 'bookufy:detail' book.id %}" class="text-underline">Read More</a>
+	  </p>
+	</li>
+	{% endfor %}
+      </ul>
+      <div class="container my-4">
+	{% if prev %}<a class="btn fs-3" href="{% url 'bookufy:search'%}{{query}}&page={{page.number_prev}}"><i class="bi bi-arrow-left-circle"></i></a>{% endif %}
+	{% if next %}<a class="btn fs-3" href="{% url 'bookufy:search' %}{{query}}&page={{ page.number_next }}"><i class="bi bi-arrow-right-circle"></i></a>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

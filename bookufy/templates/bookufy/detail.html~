@@ -1,0 +1,45 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+<section class="container my-5">
+  <h1 class="mb-5">Detail of the Book</h1>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Title</span>
+    <p class="fs-5 px-2">{{ book.title }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Author</span>
+    <p class="fs-5 px-2">{{ book.author|default:"<i>-</i>" }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Genre</span>
+    <p class="fs-5 px-2">{{ book.genre|default:"<i>-</i>" }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Release Year</span>
+    <p class="fs-5 px-2">{{ book.release_year|default:"<i>-</i>" }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Number of Pages</span>
+    <p class="fs-5 px-2">{{ book.num_of_page }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Score</span>
+    <p class="fs-5 px-2">{{ book.score|default:"<i>-</i>" }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Is Public Domain</span>
+    <p class="fs-5 px-2">{{ book.is_public_domain|default:"<i>-</i>" }}</p>
+  </div>
+  <div>
+    <span class="text-body-secondary bg-secondary-subtle py-1 px-2 rounded">Note</span>
+    <p class="fs-5 px-2">{{ book.note|default:"<i>-</i>" }}</p>
+  </div>
+  <div>
+    <a class="btn btn-primary" href="{% url 'bookufy:edit' book.id %}"><i class="bi bi-pencil-square"></i></a>
+    <a class="btn btn-danger" href="{% url 'bookufy:delete' book.id %}"><i class="bi bi-trash"></i></a>
+  </div>
+</section>
+{% endblock %}

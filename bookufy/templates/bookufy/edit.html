@@ -11,8 +11,43 @@
       <input type="text" name="title" class="form-control" id="title" value="{{ book.title }}" spellcheck="false" required>
     </div>
     <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+      <input type="text" name="author" class="form-control" id="author" value="{{ book.author }}" spellcheck="false">
+    </div>
+    <div class="mb-3">
+      <label for="genre" class="form-label">Genre</label>
+      <input type="text" name="genre" class="form-control" id="genre" value="{{ book.genre }}" spellcheck="false">
+    </div>
+    <div class="mb-3">
+      <label for="release_year" class="form-label">Release Year</label>
+      <input type="number" name="release_year" min="0" value="2000" step="1" value="{{ book.release_year }}" class="form-control" id="release_year" spellcheck="false">
+    </div>
+    <div class="mb-3">
+      <label for="score" class="form-label">Score</label>
+      <input type="number" min="0.0" max="10.0" step="0.1" value="0.0" name="score" value="{{ book.score }}" class="form-control" id="score" spellcheck="false">
+    </div>
+    <div class="mb-3">
+      <p>Is Public Domain</p>
+      <div class="form-check form-check-inline ">
+	<input class="form-check-input" type="radio" name="is_public_domain" value="True" id="is_public_domain_yes" {% if book.is_public_domain is True %}checked{% endif %}>
+	<label class="form-check-label" for="is_public_domain_yes">
+	  Yes
+	</label>
+      </div>
+      <div class="form-check form-check-inline">
+	<input class="form-check-input" type="radio" name="is_public_domain" value="False" id="is_public_domain_no" {% if book.is_public_domain is False %}checked{% endif %}>
+	<label class="form-check-label" for="is_public_domain_no">
+	  No
+	</label>
+      </div>
+    </div>
+    <div class="mb-3">
       <label for="num_of_page" class="form-label">Number of Pages</label>
       <input type="number" name="num_of_page" min="0" step="1" value="{{ book.num_of_page }}" class="form-control" id="num_of_page" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="floatingTextarea">Note</label>
+      <textarea class="form-control" id="floatingTextarea" rows="10" value="{{ book.note }}"  name="note"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
   </form>
